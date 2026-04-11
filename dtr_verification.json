@@ -1,0 +1,153 @@
+{
+  "metadata": {
+    "titre": "Valeurs de référence pour la vérification réglementaire - DTR C 3.2/4",
+    "version": "2016",
+    "source": "CNERIB",
+    "description": "Tableaux 8.4, 8.6a/b, 8.8 - Différences de température de référence ΔTSréf",
+    "date_export": "2026-03-08"
+  },
+
+  "parois_horizontales": {
+    "description": "Tableau 8.4 - ΔTSréf,PH pour parois horizontales (°C)",
+    "unite": "°C",
+    
+    "contact_exterieur": {
+      "A": {"alt_<500": 13.39, "500_<1000": 12.49, "alt_≥1000": 9.99},
+      "B": {"alt_<500": 14.54, "500_<1000": 13.59, "alt_≥1000": 12.09},
+      "B1": {"alt_<500": 16.09, "alt_>500": 16.09},
+      "C": {"alt_<1000": 13.49, "alt_≥1000": 11.24},
+      "D": {"alt_<1000": 13.09, "alt_≥1000": 12.09},
+      "E": {"alt_<1000": 13.49, "alt_≥1000": 11.24},
+      "F": {"alt_<1000": 12.09, "alt_≥1000": 12.09}
+    },
+    
+    "contact_local_non_conditionne": {
+      "A": {"alt_<500": 4.0, "500_<1000": 3.5, "alt_≥1000": 0.5},
+      "B": {"alt_<500": 5.0, "500_<1000": 4.0, "alt_≥1000": 5.0},
+      "B1": {"toutes": 6.0},
+      "C": {"alt_<1000": 6.5, "alt_≥1000": 3.0},
+      "D": {"alt_<1000": 9.0, "alt_≥1000": 13.0},
+      "E": {"alt_<1000": 6.5, "alt_≥1000": 3.0},
+      "F": {"toutes": 6.0}
+    }
+  },
+
+  "parois_verticales": {
+    "description": "Tableaux 8.6a et 8.6b - ΔTSréf,PV pour parois verticales (°C)",
+    "unite": "°C",
+    "orientations": ["N", "NE", "E", "SE", "S", "SO", "O", "NO"],
+    
+    "latitude_20N": {
+      "A": {
+        "alt_<500": [5.81, 6.65, 7.03, 8.23, 6.84, 9.45, 9.86, 6.89],
+        "500_<1000": [4.86, 5.7, 6.08, 7.28, 5.89, 8.5, 8.91, 5.94],
+        "alt_≥1000": [3.36, 4.2, 4.58, 5.78, 4.39, 7.0, 7.41, 4.44]
+      },
+      "B1": {
+        "alt_<500": [7.36, 8.2, 8.58, 9.78, 8.39, 11.0, 11.4, 8.44]
+      },
+      "C": {
+        "alt_<500": [4.76, 5.6, 5.98, 7.18, 5.79, 8.4, 8.81, 5.84],
+        "alt_≥500": [2.51, 3.35, 3.73, 4.93, 3.54, 6.15, 6.56, 3.59]
+      },
+      "D": {
+        "alt_<1000": [7.36, 8.2, 8.58, 9.78, 8.39, 11.0, 11.4, 8.44],
+        "alt_≥1000": [4.86, 5.7, 6.08, 7.28, 5.89, 8.5, 8.91, 5.94]
+      },
+      "E": {
+        "toutes": [9.26, 10.1, 10.48, 11.68, 10.29, 12.9, 13.3, 10.34]
+      },
+      "E1": {
+        "alt_<500": [4.76, 5.6, 5.98, 7.18, 5.79, 8.4, 8.81, 5.84],
+        "alt_≥500": [2.51, 3.35, 3.73, 4.93, 3.54, 6.15, 6.56, 3.59]
+      },
+      "F": {
+        "toutes": [8.26, 9.1, 9.48, 10.68, 9.29, 11.9, 12.3, 9.34]
+      }
+    },
+    
+    "latitude_40N": {
+      "A": {
+        "alt_<500": [4.66, 5.44, 5.89, 8.22, 9.81, 10.02, 8.75, 5.66],
+        "500_<1000": [3.76, 4.54, 4.99, 7.32, 8.91, 9.12, 7.85, 4.76],
+        "alt_≥1000": [1.26, 2.04, 2.49, 4.82, 6.41, 6.62, 5.35, 2.26]
+      },
+      "B": {
+        "alt_<500": [5.81, 6.61, 7.04, 8.66, 8.03, 10.01, 9.9, 6.81],
+        "500_<1000": [4.86, 5.66, 6.09, 7.71, 7.08, 9.15, 8.91, 5.86],
+        "alt_≥1000": [3.36, 4.16, 4.59, 6.21, 5.58, 7.65, 7.45, 4.36]
+      },
+      "B1": {
+        "alt_<500": [7.36, 8.14, 8.59, 10.92, 12.51, 12.72, 11.45, 8.36]
+      },
+      "C": {
+        "alt_<500": [4.76, 5.54, 5.99, 8.32, 9.91, 10.12, 8.85, 5.76],
+        "alt_≥500": [2.51, 3.29, 3.74, 6.07, 7.66, 7.87, 6.6, 3.51]
+      }
+    }
+  },
+
+  "parois_vitrees": {
+    "description": "Tableau 8.8 - ΔTSréf,PVI pour parois vitrées (°C)",
+    "unite": "°C",
+    
+    "contact_exterieur": {
+      "A": {"alt_<500": 7, "500_<1000": 6.5, "alt_≥1000": 3.5},
+      "B": {"alt_<500": 11, "500_<1000": 10, "alt_≥1000": 8},
+      "B1": {"alt_<500": 12, "alt_≥500": 9},
+      "C": {"alt_<500": 14, "alt_≥500": 10},
+      "D": {"alt_<1000": 12.5, "alt_≥1000": 9},
+      "E": {"alt_<500": 17, "alt_≥500": 14},
+      "F": {"alt_<500": 10, "alt_≥500": 21}
+    },
+    
+    "contact_local_non_conditionne": {
+      "A": {"alt_<500": 4, "500_<1000": 3.5, "alt_≥1000": 0.5},
+      "B": {"alt_<500": 5, "500_<1000": 4, "alt_≥1000": 5},
+      "B1": {"alt_<500": 6},
+      "C": {"alt_<500": 6, "alt_≥500": 3},
+      "D": {"alt_<1000": 9, "alt_≥1000": 13},
+      "E": {"alt_<500": 6.5, "alt_≥500": 3},
+      "F": {"alt_<500": 6, "alt_≥500": 9}
+    }
+  },
+
+  "coefficients_reglementaires": {
+    "description": "Coefficients a, c, e', FSref, NPVIref des formules de vérification",
+    
+    "a_parois_horizontales": {
+      "description": "Coefficient a pour parois horizontales (W/m².°C) - Tableau 8.3",
+      "toiture_ext": {
+        "logement_individuel": {"A": 0.9, "B": 0.9, "B1_B2": 0.9, "C": 0.9, "D": 0.9, "E": 0.9, "E1": 0.9, "F": 0.9},
+        "collectif_bureaux": {"A": 0.9, "B": 0.75, "B1_B2": 0.75, "C": 0.75, "D": 0.75, "E": 0.9, "E1": 0.9, "F": 0.9}
+      },
+      "plancher_haut_local_non_conditionne": 1.9,
+      "plancher_bas_local_non_conditionne": 2.7
+    },
+    
+    "c_parois_verticales": {
+      "description": "Coefficient c pour parois verticales (W/m².°C) - Tableau 8.5",
+      "logement_individuel": {"A": 1.2, "B": 1, "B1": 1, "B2": 1, "C": 1, "D": 1, "E": 1.2, "E1": 1.2, "F": 1.2},
+      "collectif_bureaux": {"A": 1.2, "B": 1, "B1": 1, "B2": 1, "C": 1, "D": 1, "E": 1.2, "E1": 1.2, "F": 1.2}
+    },
+    
+    "e_prime": {
+      "description": "Coefficient e' pour parois vitrées (W/m².°C) - § VIII.2.5.2.2",
+      "habitation_hebergement": 4.2,
+      "bureaux": 5.4
+    },
+    
+    "FS_ref": {
+      "description": "Facteur solaire de référence FSref - § VIII.2.5.2.1",
+      "habitation_hebergement": 0.15,
+      "bureaux": 0.38
+    },
+    
+    "NPVI_ref": {
+      "description": "Coefficient d'amortissement de référence NPVI,ref - Tableau 8.7",
+      "habitation_hebergement": [0.95, 0.26, 0.31, 0.44, 0.68, 0.62, 0.43, 0.30],
+      "bureaux": [0.98, 0.19, 0.21, 0.28, 0.65, 0.77, 0.61, 0.40],
+      "orientations": ["N", "NE", "E", "SE", "S", "SO", "O", "NO"]
+    }
+  }
+}

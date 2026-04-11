@@ -1,0 +1,221 @@
+{
+  "metadata": {
+    "titre": "Coefficients de calcul - DTR C 3.2/4 (Version complète)",
+    "version": "2016",
+    "source": "CNERIB",
+    "date_export": "2026-03-08"
+  },
+
+  "echanges_superficiels": {
+    "hiver": [
+      {"type_paroi": "verticale (mur)", "contact": "exterieur", "Rsi_Rse_m2C_W": 0.17},
+      {"type_paroi": "verticale (mur)", "contact": "local non chauffe", "Rsi_Rse_m2C_W": 0.22},
+      {"type_paroi": "horizontale (toiture)", "flux": "ascendant", "contact": "exterieur", "Rsi_Rse_m2C_W": 0.14},
+      {"type_paroi": "horizontale (toiture)", "flux": "ascendant", "contact": "local non chauffe", "Rsi_Rse_m2C_W": 0.18},
+      {"type_paroi": "horizontale (plancher)", "flux": "descendant", "contact": "exterieur", "Rsi_Rse_m2C_W": 0.22},
+      {"type_paroi": "horizontale (plancher)", "flux": "descendant", "contact": "local non chauffe", "Rsi_Rse_m2C_W": 0.34}
+    ],
+    "ete": [
+      {"type_paroi": "verticale (mur)", "contact": "exterieur", "Rsi_Rse_m2C_W": 0.14},
+      {"type_paroi": "verticale (mur)", "contact": "local non chauffe", "Rsi_Rse_m2C_W": 0.21},
+      {"type_paroi": "horizontale (toiture)", "flux": "ascendant", "contact": "exterieur", "Rsi_Rse_m2C_W": 0.20},
+      {"type_paroi": "horizontale (toiture)", "flux": "ascendant", "contact": "local non chauffe", "Rsi_Rse_m2C_W": 0.33},
+      {"type_paroi": "horizontale (plancher)", "flux": "descendant", "contact": "exterieur", "Rsi_Rse_m2C_W": 0.12},
+      {"type_paroi": "horizontale (plancher)", "flux": "descendant", "contact": "local non chauffe", "Rsi_Rse_m2C_W": 0.17}
+    ]
+  },
+
+  "coefficients_reference_chauffage": {
+    "logement_individuel": [
+      {"zone": "A", "a_toit": 0.9, "b_plancher": 1.2, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "A1", "a_toit": 0.9, "b_plancher": 1.2, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "B", "a_toit": 0.9, "b_plancher": 1, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "C", "a_toit": 0.9, "b_plancher": 1, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "D", "a_toit": 0.9, "b_plancher": 1.2, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9}
+    ],
+    "collectif_bureaux_hebergement": [
+      {"zone": "A", "a_toit": 0.9, "b_plancher": 1.2, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "A1", "a_toit": 0.9, "b_plancher": 1.2, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "B", "a_toit": 0.75, "b_plancher": 1, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "C", "a_toit": 0.75, "b_plancher": 1, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9},
+      {"zone": "D", "a_toit": 0.9, "b_plancher": 1.2, "c_mur": 3, "d_porte": 3.8, "e_fenetre": 0.9}
+    ]
+  },
+
+  "coefficients_surchauffe": {
+    "cin": [
+      {"condition": "chauffage continu", "valeur": 0.10},
+      {"condition": "chauffage discontinu, inertie faible ou moyenne", "valeur": 0.15},
+      {"condition": "chauffage discontinu, inertie forte", "valeur": 0.20}
+    ],
+    "cr": [
+      {"condition": "chauffage individuel", "valeur": 0},
+      {"condition": "chauffage central, toutes tuyauteries calorifugées", "valeur": 0.05},
+      {"condition": "chauffage central, calorifuge partiel", "valeur": 0.10},
+      {"condition": "chauffage central, réseau non calorifugé", "valeur": 0.20}
+    ]
+  },
+
+  "ponts_thermiques": {
+    "forfaitaire": {
+      "valeur": 0.20,
+      "description": "20% des pertes surfaciques par transmission"
+    },
+    "liaisons_mur_menuiserie": [
+      {"type_isolation": "repartie", "position": "nu intérieur", "kl_W_mC": 0.05},
+      {"type_isolation": "repartie", "position": "nu extérieur", "kl_W_mC": 0.05},
+      {"type_isolation": "exterieure", "position": "nu intérieur, isolation arrêtée", "kl_W_mC": 0.10},
+      {"type_isolation": "exterieure", "position": "nu intérieur, isolation recouvrant", "kl_W_mC": 0.05},
+      {"type_isolation": "interieure", "position": "nu extérieur, isolation arrêtée", "kl_W_mC": 0.10},
+      {"type_isolation": "interieure", "position": "nu extérieur, isolation recouvrant", "kl_W_mC": 0.05}
+    ],
+    "liaisons_deux_parois_exterieures": [
+      {"type": "isolation répartie, parois identiques", "kl_W_mC": "0.2 × K × e"},
+      {"type": "isolation intérieure, angle rentrant, parois identiques", "kl_W_mC": "0.6 × K × e"},
+      {"type": "isolation extérieure, angle saillant, parois identiques", "kl_W_mC": "0.6 × K × e"},
+      {"type": "isolation répartie, angle avec poteau béton", "kl_W_mC": "0.45 × e"}
+    ]
+  },
+
+  "coefficients_absorption_alpha": [
+    {"couleur": "sombre (bleu foncé, rouge foncé, brun foncé)", "valeur": 0.90},
+    {"couleur": "moyenne (vert clair, bleu clair, gris clair)", "valeur": 0.70},
+    {"couleur": "claire (blanc, crème)", "valeur": 0.50},
+    {"couleur": "noire mat", "valeur": 1.00},
+    {"materiau": "asphalte", "valeur": 0.90},
+    {"materiau": "feutre bitumé", "valeur": 0.90},
+    {"materiau": "ardoise", "valeur": 0.93},
+    {"materiau": "tuile", "valeur": 0.80},
+    {"materiau": "béton, brique", "valeur": 0.75},
+    {"materiau": "pierre calcaire blanche", "valeur": 0.60},
+    {"materiau": "aluminium poli", "valeur": 0.04},
+    {"materiau": "acier poli", "valeur": 0.06},
+    {"materiau": "tôle galvanisée", "valeur": 0.70}
+  ],
+
+  "correction_rayonnement": {
+    "cadre_fenetre": [
+      {"type": "metal", "valeur": 1.17},
+      {"type": "bois", "valeur": 1.00},
+      {"type": "PVC", "valeur": 1.00}
+    ],
+    "limpide_atmosphere": [
+      {"condition": "limpide (zone rurale, hors agglomération)", "valeur": 1.00},
+      {"condition": "peu limpide (zone suburbaine, résidentielle)", "valeur": 0.92},
+      {"condition": "obscure (centre ville, zone industrielle)", "valeur": 0.87}
+    ],
+    "altitude": {
+      "formule": "1 + (altitude_m / 300) * 0.007",
+      "base_0m": 1.00
+    },
+    "Cros_zone_climatique": [
+      {"zone": "A (alt < 500m)", "valeur": 0.99},
+      {"zone": "A (500-1000m)", "valeur": 1.02},
+      {"zone": "A (≥1000m)", "valeur": 1.07},
+      {"zone": "B (alt > 500m)", "valeur": 1.03},
+      {"zone": "B1", "valeur": 1.10},
+      {"zone": "C (alt < 500m)", "valeur": 1.05},
+      {"zone": "C (alt ≥ 500m)", "valeur": 1.07},
+      {"zone": "D (alt < 1000m)", "valeur": 1.10},
+      {"zone": "E", "valeur": 1.15},
+      {"zone": "F", "valeur": 1.19}
+    ]
+  },
+
+  "facteurs_solaires": {
+    "dalles_paves_verre": [
+      {"dimensions_mm": "150x150x100", "ensoleille": 0.55, "ombre_N_NO_O_SO": 0.34, "ombre_E_SE_NE": 0.51},
+      {"dimensions_mm": "200x200x100", "ensoleille": 0.65, "ombre_N_NO_O_SO": 0.40, "ombre_E_SE_NE": 0.60},
+      {"dimensions_mm": "300x300x100", "ensoleille": 0.75, "ombre_N_NO_O_SO": 0.46, "ombre_E_SE_NE": 0.69}
+    ],
+    "vitrages_speciaux_simple_epaisseur": [
+      {"type": "Verre à vitre normal 2-3mm", "FS": 1.00},
+      {"type": "Verre à vitre épais 4mm", "FS": 0.98},
+      {"type": "Glace claire ordinaire 6mm", "FS": 0.95},
+      {"type": "Verre absorbant bronze 5.5mm", "FS": 0.71},
+      {"type": "Glace réfléchissante bronze 6mm", "FS": 0.55},
+      {"type": "Film réflecteur sur glace claire", "FS": 0.25}
+    ],
+    "vitrages_doubles": [
+      {"type": "Glace claire 6mm + lame air 6mm + glace claire 6mm", "FS": 0.85},
+      {"type": "Glace absorbante grise ext + glace claire int", "FS": 0.59},
+      {"type": "Glace réfléchissante bronze ext + glace claire int", "FS": 0.44}
+    ]
+  },
+
+  "coefficients_ventilation_taux_renouvellement": [
+    {"type_local": "Dépendances maison individuelle (cave, garage, cellier)", "taux_horaire": 0.5},
+    {"type_local": "Circulation commune sans ouverture directe sur extérieur", "taux_horaire": 0.5},
+    {"type_local": "Circulation commune avec ouverture directe sur extérieur", "taux_horaire": 2.0},
+    {"type_local": "Circulation avec bouche de désenfumage ouverte", "taux_horaire": 4.0},
+    {"type_local": "Hall d'entrée", "taux_horaire": 4.0},
+    {"type_local": "Garage collectif", "taux_horaire": 1.0}
+  ],
+
+  "debits_air_neuf_extrait": {
+    "minimal_reference_habitation": [
+      {"nb_pieces_principales": 1, "Qvmin_m3_h": 25},
+      {"nb_pieces_principales": 2, "Qvmin_m3_h": 50},
+      {"nb_pieces_principales": 3, "Qvmin_m3_h": 75},
+      {"nb_pieces_principales": 4, "Qvmin_m3_h": 100},
+      {"nb_pieces_principales": 5, "Qvmin_m3_h": 110}
+    ],
+    "maximal_reference_habitation": [
+      {"nb_pieces": 1, "cuisine": 75, "sdb": 15, "autre_salle_eau": 15, "wc": 15},
+      {"nb_pieces": 2, "cuisine": 90, "sdb": 15, "autre_salle_eau": 15, "wc": 15},
+      {"nb_pieces": 3, "cuisine": 105, "sdb": 30, "autre_salle_eau": 15, "wc": 15},
+      {"nb_pieces": 4, "cuisine": 120, "sdb": 30, "autre_salle_eau": 15, "wc": 30},
+      {"nb_pieces": "5 et plus", "cuisine": 135, "sdb": 30, "autre_salle_eau": 15, "wc": 30}
+    ]
+  },
+
+  "infiltrations_perméabilité_ouvrants": [
+    {"type_ouvrant": "Fenêtre ou porte-fenêtre", "Po_m3_h_m2": 4.0},
+    {"type_ouvrant": "Porte avec seuil et joint étanchéité", "Po_m3_h_m2": 1.2},
+    {"type_ouvrant": "Porte simple", "Po_m3_h_m2": 6.0},
+    {"type_ouvrant": "Double fenêtre", "Po_m3_h_m2": 2.4}
+  ],
+
+  "temperature_base_par_altitude": [
+    {"zone": "A", "altitude": "<300", "t_hiver": 3, "t_ete": 34},
+    {"zone": "A", "altitude": "300-450", "t_hiver": 2, "t_ete": 33.5},
+    {"zone": "A", "altitude": "450-600", "t_hiver": 1, "t_ete": 33},
+    {"zone": "A", "altitude": "600-800", "t_hiver": 0, "t_ete": 32},
+    {"zone": "A", "altitude": "≥800", "t_hiver": -1.5, "t_ete": 31.5},
+    {"zone": "B", "altitude": "<450", "t_hiver": -2, "t_ete": 38},
+    {"zone": "B", "altitude": "450-600", "t_hiver": -3, "t_ete": 37},
+    {"zone": "B", "altitude": "600-800", "t_hiver": -4, "t_ete": 36},
+    {"zone": "B", "altitude": "≥800", "t_hiver": -5.5, "t_ete": 35}
+  ],
+
+  "apports_internes_occupants": [
+    {"activite": "Assis, repos", "temp_27C_sensible_W": 57, "temp_27C_latent_W": 45},
+    {"activite": "Assis, travail très léger", "temp_27C_sensible_W": 58, "temp_27C_latent_W": 73},
+    {"activite": "Debout, marche lente", "temp_27C_sensible_W": 69, "temp_27C_latent_W": 72},
+    {"activite": "Travail léger (atelier)", "temp_27C_sensible_W": 72, "temp_27C_latent_W": 80}
+  ],
+
+  "apports_internes_equipements": [
+    {"type": "Micro-ordinateur (écran compris)", "puissance_W": 450},
+    {"type": "PC portable", "puissance_W": 15},
+    {"type": "Imprimante laser", "puissance_W": 376},
+    {"type": "Photocopieur 500 cop/h", "puissance_W": 900},
+    {"type": "Téléviseur", "puissance_W": 150},
+    {"type": "Réfrigérateur 200l", "puissance_W": 175},
+    {"type": "Four électrique", "puissance_W": 3000, "latent_W": 610}
+  ],
+
+  "eclairage_puissances": [
+    {"type_local": "Bureaux, salle de cours", "intensite_lux": 250, "fluorescent_W_m2": 16},
+    {"type_local": "Salles de lecture, magasins", "intensite_lux": 500, "fluorescent_W_m2": 32},
+    {"type_local": "Dessin industriel, grands bureaux", "intensite_lux": 1000, "fluorescent_W_m2": 65}
+  ],
+
+  "coefficients_simultaneite": [
+    {"apport": "Occupants (sensible)", "bureaux_reunions": 0.8, "logement": 0.8, "vente_restauration": 0.9},
+    {"apport": "Occupants (latent)", "bureaux_reunions": 0.5, "logement": 0.5, "vente_restauration": 0.9},
+    {"apport": "Moteurs électriques", "bureaux_reunions": 0.6, "logement": 0.5, "vente_restauration": 0.85},
+    {"apport": "Appareils électriques", "bureaux_reunions": 0.6, "logement": 0.5, "vente_restauration": 0.85},
+    {"apport": "Eclairage fluorescent", "bureaux_reunions": 0.7, "logement": 0.35, "vente_restauration": 0.9}
+  ]
+}
