@@ -1,7 +1,8 @@
-from scripts import Evaluation_Formules_DTR, zonage1
 import utils
+import Evaluation_Formules_DTR
+import zonage1
 
-def load_communes_data(path="data/data_communes_algeria.json"):
+def load_communes_data(path="data_communes_algeria.json"):
     return utils.load_json_file(path)
 
 def get_climate_zones(commune_name, data):
@@ -17,7 +18,7 @@ def get_climate_zones(commune_name, data):
     }
 
 def compute_thermal_bridge():
-    from scripts.Evaluation_Formules_DTR import MoteurFormulesDTR, Paroi, TypeIsolation
+    from Evaluation_Formules_DTR import MoteurFormulesDTR, Paroi, TypeIsolation
     moteur = MoteurFormulesDTR()
     paroi1 = Paroi("Mur béton", TypeIsolation.REPARTIE, 0.5, 0.2, 2.0)
     paroi2 = Paroi("Mur brique", TypeIsolation.REPARTIE, 0.6, 0.25, 1.8)
