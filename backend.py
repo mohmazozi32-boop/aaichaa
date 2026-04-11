@@ -1,6 +1,5 @@
-import json
 from scripts import Evaluation_Formules_DTR, zonage1
-from app import utils
+import utils
 
 def load_communes_data(path="data/data_communes_algeria.json"):
     return utils.load_json_file(path)
