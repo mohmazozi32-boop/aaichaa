@@ -4,7 +4,7 @@ import ui
 
 st.set_page_config(page_title="Évaluation Thermique Algérie", layout="wide")
 
-# خلفية بعلم الجزائر
+# تطبيق ألوان علم الجزائر في التصميم
 st.markdown(
     """
     <style>
@@ -14,6 +14,19 @@ st.markdown(
         background-position: center;
         background-attachment: fixed;
     }
+    .main {
+        background-color: rgba(255,255,255,0.85);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    h1, h2, h3 {
+        color: #006233; /* الأخضر */
+    }
+    .stButton>button {
+        background-color: #d21034; /* الأحمر */
+        color: white;
+        font-weight: bold;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -22,7 +35,7 @@ st.markdown(
 # اختيار اللغة
 lang = ui.language_selector()
 
-# اختيار الثيم
+# اختيار الثيم (نهار/ليل)
 theme = st.radio("Mode d'affichage", ["Jour", "Nuit"])
 ui.set_theme(theme)
 
