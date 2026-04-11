@@ -1,5 +1,6 @@
 import streamlit as st
-from app import backend, ui
+import backend
+import ui
 
 st.set_page_config(page_title="Évaluation Thermique Algérie", layout="wide")
 
