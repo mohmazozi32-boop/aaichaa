@@ -6,7 +6,7 @@ def set_theme(mode: str):
             """
             <style>
             body {background-color: #1e1e1e; color: white;}
-            .stButton>button {background-color: #444; color: white;}
+            .stButton>button {background-color: #d21034; color: white;}
             </style>
             """,
             unsafe_allow_html=True
@@ -16,7 +16,7 @@ def set_theme(mode: str):
             """
             <style>
             body {background-color: #f9f9f9; color: black;}
-            .stButton>button {background-color: #ddd; color: black;}
+            .stButton>button {background-color: #006233; color: white;}
             </style>
             """,
             unsafe_allow_html=True
