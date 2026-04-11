@@ -1,7 +1,6 @@
 import streamlit as st
 
 def set_theme(mode: str):
-    """تطبيق ثيم نهار/ليل"""
     if mode == "Nuit":
         st.markdown(
             """
@@ -24,16 +23,10 @@ def set_theme(mode: str):
         )
 
 def language_selector():
-    """اختيار اللغة"""
     lang = st.radio("Choisir la langue / اختر اللغة", ["Français", "العربية"])
-    if lang == "العربية":
-        st.success("تم اختيار اللغة العربية")
-    else:
-        st.success("Langue française sélectionnée")
     return lang
 
 def header(title_fr: str, title_ar: str, lang: str):
-    """عرض العنوان حسب اللغة"""
     if lang == "العربية":
         st.title(title_ar)
     else:
