@@ -1,62 +1,62 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-import json
+import streamlit as st
+import requests
 
-from evaluation_dtr import MoteurFormulesDTR
-from zonage1 import AlgerianClimateEnricher
+st.set_page_config(page_title="Évaluation Thermique Algérie", layout="wide")
 
-app = FastAPI(title="Thermal Insulation Algeria API")
+st.title("منصة تقييم العزل الحراري - الجزائر 🇩🇿")
 
-# =========================
-# CORS (لربط الواجهة لاحقاً)
-# =========================
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # لاحقاً نحدد الدومين
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+commune = st.text_input("أدخل اسم البلدية")
 
-# =========================
-# تحميل البيانات مرة واحدة (أفضل أداء)
-# =========================
-with open("data_communes_algeria.json", "r", encoding="utf-8") as f:
-    DATA = json.load(f)
+API_URL = "http://127.0.0.1:8000"
 
-WILAYAS = DATA.get("wilayas", [])
+if st.button("عرض النتائج"):
 
-# =========================
-# الخدمات
-# =========================
-moteur = MoteurFormulesDTR()
-climate = AlgerianClimateEnricher()
+    if not commune.strip():
+        st.warning("يرجى إدخال اسم البلدية")
+    else:
+        try:
+            # =========================
+            # API CALL مع حماية
+            # =========================
+            response = requests.get(
+                f"{API_URL}/commune/{commune}",
+                timeout=5
+            )
 
+            # =========================
+            # STATUS CHECK
+            # =========================
+            if response.status_code == 200:
+                data = response.json()
 
-# =========================
-# API
-# =========================
-@app.get("/health")
-def health_check():
-    return {"status": "ok", "message": "API is running"}
+                st.success("تم جلب البيانات بنجاح")
 
-@app.get("/commune/{name}")
-def get_commune_info(name: str):
-    commune = next(
-        (c for c in WILAYAS if c["name"].lower() == name.lower()),
-        None
-    )
+                # =========================
+                # DISPLAY RESULTS
+                # =========================
+                col1, col2, col3 = st.columns(3)
 
-    if not commune:
-        raise HTTPException(status_code=404, detail="Commune not found")
+                with col1:
+                    st.metric("المنطقة الشتوية", data["winter_zone"])
 
-    winter_zone, tbe = climate.determine_winter_zone(commune, WILAYAS)
-    summer_zone, summer_conditions = climate.determine_summer_zone(commune, WILAYAS)
+                with col2:
+                    st.metric("TBE", f"{data['tbe']} °C")
 
-    return {
-        "commune": commune["name"],
-        "winter_zone": winter_zone,
-        "tbe": tbe,
-        "summer_zone": summer_zone,
-        "summer_conditions": summer_conditions
-    }
+                with col3:
+                    st.metric("المنطقة الصيفية", data["summer_zone"])
+
+                st.subheader("تفاصيل الصيف")
+                st.json(data["summer_conditions"])
+
+            elif response.status_code == 404:
+                st.error("❌ البلدية غير موجودة")
+
+            else:
+                st.error(f"خطأ في السيرفر: {response.text}")
+
+        except requests.exceptions.ConnectionError:
+            st.error("❌ لا يمكن الاتصال بالـ API (تأكد أن FastAPI يعمل)")
+        except requests.exceptions.Timeout:
+            st.error("⏳ انتهت مهلة الاتصال")
+        except Exception as e:
+            st.error(f"خطأ غير متوقع: {e}")
