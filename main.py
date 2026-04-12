@@ -1,62 +1,34 @@
-import streamlit as st
-import requests
+from fastapi import FastAPI
+import uvicorn
+import json
+from evaluation_dtr import MoteurFormulesDTR
+from zonage1 import AlgerianClimateEnricher
 
-st.set_page_config(page_title="Évaluation Thermique Algérie", layout="wide")
+app = FastAPI(title="Thermal Insulation Algeria")
 
-st.title("منصة تقييم العزل الحراري - الجزائر 🇩🇿")
+moteur = MoteurFormulesDTR()
+climate = AlgerianClimateEnricher()
 
-commune = st.text_input("أدخل اسم البلدية")
+@app.get("/commune/{name}")
+def get_commune_info(name: str):
+    with open("data_communes_algeria.json", "r", encoding="utf-8") as f:
+        data = json.load(f)
+    wilayas = data.get("wilayas", [])
+    
+    commune = next((c for c in wilayas if c["name"].lower() == name.lower()), None)
+    if not commune:
+        return {"error": "Commune not found"}
+    
+    winter_zone, tbe = climate.determine_winter_zone(commune, wilayas)
+    summer_zone, summer_conditions = climate.determine_summer_zone(commune, wilayas)
+    
+    return {
+        "commune": name,
+        "winter_zone": winter_zone,
+        "tbe": tbe,
+        "summer_zone": summer_zone,
+        "summer_conditions": summer_conditions
+    }
 
-API_URL = "http://127.0.0.1:8000"
-
-if st.button("عرض النتائج"):
-
-    if not commune.strip():
-        st.warning("يرجى إدخال اسم البلدية")
-    else:
-        try:
-            # =========================
-            # API CALL مع حماية
-            # =========================
-            response = requests.get(
-                f"{API_URL}/commune/{commune}",
-                timeout=5
-            )
-
-            # =========================
-            # STATUS CHECK
-            # =========================
-            if response.status_code == 200:
-                data = response.json()
-
-                st.success("تم جلب البيانات بنجاح")
-
-                # =========================
-                # DISPLAY RESULTS
-                # =========================
-                col1, col2, col3 = st.columns(3)
-
-                with col1:
-                    st.metric("المنطقة الشتوية", data["winter_zone"])
-
-                with col2:
-                    st.metric("TBE", f"{data['tbe']} °C")
-
-                with col3:
-                    st.metric("المنطقة الصيفية", data["summer_zone"])
-
-                st.subheader("تفاصيل الصيف")
-                st.json(data["summer_conditions"])
-
-            elif response.status_code == 404:
-                st.error("❌ البلدية غير موجودة")
-
-            else:
-                st.error(f"خطأ في السيرفر: {response.text}")
-
-        except requests.exceptions.ConnectionError:
-            st.error("❌ لا يمكن الاتصال بالـ API (تأكد أن FastAPI يعمل)")
-        except requests.exceptions.Timeout:
-            st.error("⏳ انتهت مهلة الاتصال")
-        except Exception as e:
-            st.error(f"خطأ غير متوقع: {e}")
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
