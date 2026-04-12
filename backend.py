@@ -1,36 +1,108 @@
-import utils
-import Evaluation_Formules_DTR
-import zonage1
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+import json
 
-def load_communes_data(path="data_communes_algeria.json"):
-    return utils.load_json_file(path)
+from evaluation_dtr import MoteurFormulesDTR
+from zonage1 import AlgerianClimateEnricher
 
-def get_climate_zones(commune_name, data):
-    climate_engine = zonage1.AlgerianClimateEnricher()
-    wilaya_data = climate_engine.find_wilaya_by_name(commune_name, data["wilayas"])
-    zone_hiver, tbe = climate_engine.determine_winter_zone(wilaya_data, data["wilayas"])
-    zone_ete, conditions = climate_engine.determine_summer_zone(wilaya_data, data["wilayas"])
+app = FastAPI(title="DTR Thermal Backend - Algeria")
+
+# =========================
+# CORS (لواجهة Streamlit / React)
+# =========================
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# =========================
+# SERVICES
+# =========================
+moteur = MoteurFormulesDTR()
+climate = AlgerianClimateEnricher()
+
+# =========================
+# LOAD DATA (مرة واحدة فقط)
+# =========================
+with open("data_communes_algeria.json", "r", encoding="utf-8") as f:
+    communes_data = json.load(f)["wilayas"]
+
+with open("dtr_materiaux.json", "r", encoding="utf-8") as f:
+    materiaux_data = json.load(f)
+
+with open("dtr_coefficients.json", "r", encoding="utf-8") as f:
+    coeffs_data = json.load(f)
+
+# =========================
+# HEALTH CHECK
+# =========================
+@app.get("/health")
+def health():
+    return {"status": "ok", "message": "DTR Backend running"}
+
+# =========================
+# COMMUNE INFO
+# =========================
+@app.get("/commune/{name}")
+def get_commune_info(name: str):
+    commune = next(
+        (c for c in communes_data if c["name"].lower() == name.lower()),
+        None
+    )
+
+    if not commune:
+        raise HTTPException(status_code=404, detail="Commune not found")
+
+    winter_zone, tbe = climate.determine_winter_zone(commune, communes_data)
+    summer_zone, summer_conditions = climate.determine_summer_zone(commune, communes_data)
+
     return {
-        "zone_hiver": zone_hiver,
-        "temp_base_hiver": tbe,
-        "zone_ete": zone_ete,
-        "conditions_ete": conditions
+        "commune": commune["name"],
+        "winter_zone": winter_zone,
+        "tbe": tbe,
+        "summer_zone": summer_zone,
+        "summer_conditions": summer_conditions
     }
 
-def compute_thermal_bridge():
-    from Evaluation_Formules_DTR import MoteurFormulesDTR, Paroi, TypeIsolation
-    moteur = MoteurFormulesDTR()
-    paroi1 = Paroi("Mur béton", TypeIsolation.REPARTIE, 0.5, 0.2, 2.0)
-    paroi2 = Paroi("Mur brique", TypeIsolation.REPARTIE, 0.6, 0.25, 1.8)
-    kl = moteur.calculer_kl_liaison_deux_parois("isolation_repartie_identiques", paroi1, paroi2)
-    return kl
+# =========================
+# MATERIAU
+# =========================
+@app.get("/materiau/{id}")
+def get_materiau(id: str):
+    for m in materiaux_data.get("materiaux_homogenes", []):
+        if m["id"] == id:
+            return m
 
-def evaluate_commune(commune_name):
-    data = load_communes_data()
-    climate = get_climate_zones(commune_name, data)
-    kl_value = compute_thermal_bridge()
-    return {
-        "commune": commune_name,
-        "climate": climate,
-        "kl_value": kl_value
-    }
+    for m in materiaux_data.get("materiaux_heterogenes", []):
+        if m["id"] == id:
+            return m
+
+    raise HTTPException(status_code=404, detail="Matériau non trouvé")
+
+# =========================
+# COEFFICIENTS
+# =========================
+@app.get("/coefficients")
+def get_coefficients():
+    return coeffs_data
+
+# =========================
+# PONTS THERMIQUES
+# =========================
+@app.get("/ponts_thermiques")
+def get_ponts_thermiques():
+    return coeffs_data.get("ponts_thermiques", {})
+
+# =========================
+# VERIFICATION DTR
+# =========================
+@app.get("/verification")
+def get_verification():
+    try:
+        with open("dtr_verification.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except:
+        raise HTTPException(status_code=404, detail="Verification file missing")
