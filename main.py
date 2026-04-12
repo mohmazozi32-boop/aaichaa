@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from evaluation_dtr import MoteurFormulesDTR
+from evaluation_dtr import MoteurFormulesDTR, Paroi, TypeIsolation
 from zonage1 import AlgerianClimateEnricher
 
 # تحميل البيانات
@@ -21,10 +21,12 @@ climate = AlgerianClimateEnricher()
 st.set_page_config(page_title="Évaluation Thermique Algérie", layout="wide")
 st.title("منصة تقييم العزل الحراري - الجزائر 🇩🇿")
 
-commune = st.text_input("أدخل اسم البلدية")
+# اختيار البلدية من قائمة منسدلة
+commune_names = [c["name"] for c in communes_data]
+commune = st.selectbox("اختر البلدية", commune_names)
 
 if st.button("عرض النتائج"):
-    commune_data = next((c for c in communes_data if c["name"].lower() == commune.lower()), None)
+    commune_data = next((c for c in communes_data if c["name"] == commune), None)
     if commune_data:
         winter_zone, tbe = climate.determine_winter_zone(commune_data, communes_data)
         summer_zone, summer_conditions = climate.determine_summer_zone(commune_data, communes_data)
@@ -35,16 +37,10 @@ if st.button("عرض النتائج"):
         st.json(summer_conditions)
 
         st.subheader("📌 معاملات DTR")
-        st.write("مثال حساب معامل kl لجدارين:")
-        paroi1 = {"nom": "Mur béton", "epaisseur": 0.2, "K": 2.0}
-        paroi2 = {"nom": "Mur brique", "epaisseur": 0.25, "K": 1.8}
-        kl = moteur.calculer_kl_liaison_deux_parois(
-            "isolation_repartie_identiques",
-            moteur.Paroi("Mur béton", moteur.TypeIsolation.REPARTIE, 0.5, 0.2, 2.0),
-            moteur.Paroi("Mur brique", moteur.TypeIsolation.REPARTIE, 0.6, 0.25, 1.8)
-        )
+        paroi1 = Paroi("Mur béton", TypeIsolation.REPARTIE, 0.5, 0.2, 2.0)
+        paroi2 = Paroi("Mur brique", TypeIsolation.REPARTIE, 0.6, 0.25, 1.8)
+        kl = moteur.calculer_kl_liaison_deux_parois("isolation_repartie_identiques", paroi1, paroi2)
         st.write(f"kl calculé = {kl} W/m·°C")
-
     else:
         st.error("⚠️ البلدية غير موجودة في قاعدة البيانات")
 
