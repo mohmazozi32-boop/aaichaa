@@ -1,19 +1,15 @@
 import streamlit as st
-import requests
+from backend import Backend
 
-st.set_page_config(page_title="Évaluation Thermique Algérie", layout="wide")
+backend = Backend()
 
-st.title("منصة تقييم العزل الحراري - الجزائر 🇩🇿")
+st.title("واجهة إضافية لتقييم العزل الحراري")
 
 commune = st.text_input("أدخل اسم البلدية")
 
 if st.button("عرض النتائج"):
-    response = requests.get(f"http://localhost:8000/commune/{commune}")
-    if response.status_code == 200:
-        data = response.json()
-        st.subheader("📌 النتائج")
-        st.write(f"المنطقة الشتوية: {data['winter_zone']} (Tbe = {data['tbe']} °C)")
-        st.write(f"المنطقة الصيفية: {data['summer_zone']}")
-        st.json(data['summer_conditions'])
+    data = backend.get_commune_info(commune)
+    if data:
+        st.json(data)
     else:
         st.error("⚠️ البلدية غير موجودة")
