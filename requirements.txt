@@ -1,4 +1,4 @@
-fastapi
-uvicorn
-streamlit
-requests
+streamlit==1.32.0
+pandas==2.2.1
+numpy==1.26.4
+pythreejs==2.4.2
